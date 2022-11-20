@@ -1,0 +1,31 @@
+version: '3.8'
+services:
+  postgres:
+    container_name: postgres
+    image: postgres:15.0-bullseye
+    volumes:
+      - postgres_volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - 5432:5432
+
+  adonis_app:
+    container_name: adonis_app
+    restart: always
+    image: kvarzsiev/cen-rs:latest
+    depends_on:
+      - postgres
+    ports:
+      - 2512:2512
+    environment:
+      - PG_HOST=postgres
+    links:
+      - "postgres:postgres"
+    volumes:
+      - ./:/home/node/app
+    command: node ace migration:run --force && node ace db:seed && yarn start:onContainer
+
+volumes:
+  postgres_volume:
