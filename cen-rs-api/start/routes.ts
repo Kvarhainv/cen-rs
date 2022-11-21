@@ -1,5 +1,5 @@
 import Route from '@ioc:Adonis/Core/Route'
-import './routes/entidade'
+import './routes/entidades'
 
 Route.get('/', async () => {
   return { hello: 'world' }

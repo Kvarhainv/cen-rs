@@ -1,22 +1,19 @@
 <template>
- <HeaderVue></HeaderVue>
+  <CenRsHeaderVue></CenRsHeaderVue>
+  <CenRsTelaConsultaVue></CenRsTelaConsultaVue>
 </template>
 <style>
-  @import './AppStyle.scss';
+@import "./AppStyle.scss";
 </style>
 
 <script>
-  import { ref } from 'vue'
-  import HeaderVue from './components/header/Header.vue'
+import CenRsHeaderVue from "./components/header/Header.vue";
+import CenRsTelaConsultaVue from "./components/tela-consulta/TelaConsulta.vue";
 
-  export default {
-    components: {
-      HeaderVue
-    },
-
-    mounted() {
-      console.log(this.count) // 0
-    }
-  }
+export default {
+  components: {
+    CenRsHeaderVue,
+    CenRsTelaConsultaVue,
+  },
+};
 </script>
-

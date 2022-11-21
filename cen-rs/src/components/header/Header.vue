@@ -1,20 +1,20 @@
 <template>
-    <div class="blue-line"></div>
-    <div class="header">
-        <span class="title">
-            CENSO -
-            <span class="r-green">R</span>
-            <span class="s-red">S</span>
-        </span>
-    </div>
+  <div class="blue-line"></div>
+  <div class="header">
+    <span class="title">
+      CENSO -
+      <span class="r-green">R</span>
+      <span class="s-red">S</span>
+    </span>
+  </div>
 </template>
 
 <style>
-    @import './HeaderStyle.scss';
+@import "./HeaderStyle.scss";
 </style>
 
 <script>
 export default {
-    name:'Header'
-}
+  name: "CenRsHeader",
+};
 </script>

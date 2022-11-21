@@ -14,7 +14,7 @@ services:
   adonis_app:
     container_name: adonis_app
     restart: always
-    image: kvarzsiev/cen-rs:latest
+    image: kvarzsiev/cen-rs:back
     depends_on:
       - postgres
     ports:
@@ -26,6 +26,8 @@ services:
     volumes:
       - ./:/home/node/app
     command: node ace migration:run --force && node ace db:seed && yarn start:onContainer
+
+
 
 volumes:
   postgres_volume:
