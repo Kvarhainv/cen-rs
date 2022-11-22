@@ -48,37 +48,91 @@
           <p class="fw-bold text-center">Filtros</p>
         </div>
 
-        <div class="row">
-          <div class="col-4">
-            <label for="pop_absoluta_total">Pop. Absoluta Total</label>
+        <div class="row m-2">
+          <div class="col-4 p-2 d-flex flex-column">
+            <label class="pb-1 text-center" for="pop_absoluta_total"
+              >População Absoluta Total</label
+            >
             <input
+              class="border-1 border-secondary"
               v-model="pop_absoluta_total"
               type="number"
               name="pop_absoluta_total"
               placeholder="População Absoluta Total"
             />
           </div>
-          <div class="col-4">
-            <label for="pop_absoluta_urbana_total"
+          <div class="col-4 p-2 d-flex flex-column">
+            <label class="pb-1 text-center" for="pop_absoluta_urbana_total"
               >Pop. Absoluta Urbana Total</label
             >
             <input
+              class="border-1 border-secondary"
               v-model="pop_absoluta_urbana_total"
               type="number"
               name="pop_absoluta_urbana_total"
               placeholder="População Absoluta Urbana Total"
             />
           </div>
-
-          <div class="col-4">
-            <label for="pop_absoluta_urbana_sede"
+          <div class="col-4 p-2 d-flex flex-column">
+            <label class="pb-1 text-center" for="pop_absoluta_urbana_sede"
               >Pop. Absoluta Urbana na Sede</label
             >
             <input
+              class="border-1 border-secondary"
               v-model="pop_absoluta_urbana_sede"
               type="number"
               name="pop_absoluta_urbana_sede"
               placeholder="População Absoluta Urbana sede"
+            />
+          </div>
+        </div>
+        <div class="row m-2">
+          <div class="col-4 p-2 d-flex flex-column">
+            <label class="pb-1 text-center" for="pop_relativa_urbana_total"
+              >População Relativa Urbana Total</label
+            >
+            <input
+              class="border-1 border-secondary"
+              v-model="pop_relativa_urbana_total"
+              type="number"
+              name="pop_relativa_urbana_total"
+              placeholder="População Relativa Urbana Total"
+            />
+          </div>
+          <div class="col-4 p-2 d-flex flex-column">
+            <label class="pb-1 text-center" for="pop_relativa_urbana_sede"
+              >Pop. Absoluta Relativa Urbana Sede</label
+            >
+            <input
+              class="border-1 border-secondary"
+              v-model="pop_relativa_urbana_sede"
+              type="number"
+              name="pop_relativa_urbana_sede"
+              placeholder="População Relativa Urbana Sede"
+            />
+          </div>
+          <div class="col-4 p-2 d-flex flex-column">
+            <label class="pb-1 text-center" for="area_total">Área Total</label>
+            <input
+              class="border-1 border-secondary"
+              v-model="area_total"
+              type="number"
+              name="area_total"
+              placeholder="Área Total"
+            />
+          </div>
+        </div>
+        <div class="row m-2">
+          <div class="col-4 p-2 d-flex flex-column">
+            <label class="pb-1 text-center" for="densidade_demografica"
+              >Densidade Demográfica</label
+            >
+            <input
+              class="border-1 border-secondary"
+              v-model="densidade_demografica"
+              type="number"
+              name="densidade_demografica"
+              placeholder="Densidade Demográfica"
             />
           </div>
         </div>
@@ -106,6 +160,10 @@ export default {
       pop_absoluta_total: 0,
       pop_absoluta_urbana_total: 0,
       pop_absoluta_urbana_sede: 0,
+      pop_relativa_urbana_total: 0,
+      pop_relativa_urbana_sede: 0,
+      area_total: 0,
+      densidade_demografica: 0,
       num_entidades: 0,
     };
   },
@@ -136,6 +194,17 @@ export default {
               this.pop_absoluta_urbana_sede > 0
                 ? this.pop_absoluta_urbana_sede
                 : "",
+            pop_relativa_urbana_total:
+              this.pop_relativa_urbana_total > 0
+                ? this.pop_relativa_urbana_total
+                : "",
+            pop_relativa_urbana_sede:
+              this.pop_relativa_urbana_sede > 0
+                ? this.pop_relativa_urbana_sede
+                : "",
+            area_total: this.area_total > 0 ? this.area_total : "",
+            densidade_demografica:
+              this.densidade_demografica > 0 ? this.densidade_demografica : "",
             num_entidades: 10,
           },
         })
