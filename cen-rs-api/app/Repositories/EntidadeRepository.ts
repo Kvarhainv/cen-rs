@@ -4,7 +4,8 @@ import Entidade from 'App/Models/Entidade'
 export class EntidadeRepository {
   public async index(params) {
     if (params.pop_absoluta_total) {
-      return await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
+      return (
+        await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
       ABS(
       CAST(
         COALESCE(
@@ -13,10 +14,12 @@ export class EntidadeRepository {
                       ''),
                   '0')
              AS NUMERIC) - ${params.pop_absoluta_total}::NUMERIC) limit ${params.num_entidades}`)
+      ).rows
     }
 
     if (params.pop_absoluta_urbana_total) {
-      return await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
+      return (
+        await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
       ABS(
       CAST(
         COALESCE(
@@ -25,10 +28,12 @@ export class EntidadeRepository {
                       ''),
                   '0')
              AS NUMERIC) - ${params.pop_absoluta_urbana_total}::NUMERIC) limit ${params.num_entidades}`)
+      ).rows
     }
 
     if (params.pop_absoluta_urbana_sede) {
-      return await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
+      return (
+        await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
       ABS(
       CAST(
         COALESCE(
@@ -37,10 +42,12 @@ export class EntidadeRepository {
                       ''),
                   '0')
              AS NUMERIC) - ${params.pop_absoluta_urbana_sede}::NUMERIC) limit ${params.num_entidades}`)
+      ).rows
     }
 
     if (params.pop_relativa_urbana_total) {
-      return await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
+      return (
+        await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
       ABS(
       CAST(
         COALESCE(
@@ -49,10 +56,12 @@ export class EntidadeRepository {
                       ''),
                   '0')
              AS NUMERIC) - ${params.pop_relativa_urbana_total}::NUMERIC) limit ${params.num_entidades}`)
+      ).rows
     }
 
     if (params.pop_relativa_urbana_sede) {
-      return await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
+      return (
+        await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
       ABS(
       CAST(
         COALESCE(
@@ -61,10 +70,12 @@ export class EntidadeRepository {
                       ''),
                   '0')
              AS NUMERIC) - ${params.pop_relativa_urbana_sede}::NUMERIC) limit ${params.num_entidades}`)
+      ).rows
     }
 
     if (params.area_total) {
-      return await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
+      return (
+        await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
       ABS(
       CAST(
         COALESCE(
@@ -73,10 +84,12 @@ export class EntidadeRepository {
                       ''),
                   '0')
              AS NUMERIC) - ${params.area_total}::NUMERIC) limit ${params.num_entidades}`)
+      ).rows
     }
 
     if (params.densidade_demografica) {
-      return await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
+      return (
+        await Database.rawQuery(`SELECT * FROM entidades e ORDER BY
       ABS(
       CAST(
         COALESCE(
@@ -85,6 +98,7 @@ export class EntidadeRepository {
                       ''),
                   '0')
              AS NUMERIC) - ${params.densidade_demografica}::NUMERIC) limit ${params.num_entidades}`)
+      ).rows
     }
 
     var query = Entidade.query()
