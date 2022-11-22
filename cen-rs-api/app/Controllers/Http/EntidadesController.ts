@@ -11,6 +11,7 @@ export default class EntidadesController {
           return response.ok(res)
         })
     } catch (error) {
+      console.log(error)
       return response.internalServerError(error)
     }
   }

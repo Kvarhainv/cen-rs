@@ -27,7 +27,5 @@ services:
       - ./:/home/node/app
     command: node ace migration:run --force && node ace db:seed && yarn start:onContainer
 
-
-
 volumes:
   postgres_volume:
