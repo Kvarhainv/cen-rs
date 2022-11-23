@@ -20,11 +20,16 @@
           <p class="fw-bold text-center">{{ ENTIDADE.nom_entidade }}</p>
         </div>
         <div
-          class="col-1 rounded bg-gray p-2 m-2"
+          class="col-1 rounded bg-gray p-2 m-2 me-5"
           @click="displayFiltersModal = true"
         >
           <p class="fw-bold text-center">Filtros</p>
         </div>
+      </div>
+      <div class="row">
+        <AbsoluteChartComponent
+          v-if="displayGraphs == true"
+        ></AbsoluteChartComponent>
       </div>
     </div>
   </div>
@@ -43,100 +48,106 @@
     "
   >
     <div class="modal-wrapper">
-      <div class="modal-container">
-        <div class="row border-bottom p-2 mb-3 border-dark">
-          <p class="fw-bold text-center">Filtros</p>
+      <div class="modal-container d-flex flex-column justify-content-between">
+        <div>
+          <div class="row m-2">
+            <div class="col-4 p-2 d-flex flex-column">
+              <label class="pb-1 text-center" for="pop_absoluta_total"
+                >População Absoluta Total</label
+              >
+              <input
+                class="border-1 border-secondary"
+                v-model="pop_absoluta_total"
+                type="number"
+                name="pop_absoluta_total"
+                placeholder="População Absoluta Total"
+              />
+            </div>
+            <div class="col-4 p-2 d-flex flex-column">
+              <label class="pb-1 text-center" for="pop_absoluta_urbana_total"
+                >Pop. Absoluta Urbana Total</label
+              >
+              <input
+                class="border-1 border-secondary"
+                v-model="pop_absoluta_urbana_total"
+                type="number"
+                name="pop_absoluta_urbana_total"
+                placeholder="População Absoluta Urbana Total"
+              />
+            </div>
+            <div class="col-4 p-2 d-flex flex-column">
+              <label class="pb-1 text-center" for="pop_absoluta_urbana_sede"
+                >Pop. Absoluta Urbana na Sede</label
+              >
+              <input
+                class="border-1 border-secondary"
+                v-model="pop_absoluta_urbana_sede"
+                type="number"
+                name="pop_absoluta_urbana_sede"
+                placeholder="População Absoluta Urbana sede"
+              />
+            </div>
+          </div>
+          <div class="row m-2">
+            <div class="col-4 p-2 d-flex flex-column">
+              <label class="pb-1 text-center" for="pop_relativa_urbana_total"
+                >População Relativa Urbana Total</label
+              >
+              <input
+                class="border-1 border-secondary"
+                v-model="pop_relativa_urbana_total"
+                type="number"
+                name="pop_relativa_urbana_total"
+                placeholder="População Relativa Urbana Total"
+              />
+            </div>
+            <div class="col-4 p-2 d-flex flex-column">
+              <label class="pb-1 text-center" for="pop_relativa_urbana_sede"
+                >Pop. Absoluta Relativa Urbana Sede</label
+              >
+              <input
+                class="border-1 border-secondary"
+                v-model="pop_relativa_urbana_sede"
+                type="number"
+                name="pop_relativa_urbana_sede"
+                placeholder="População Relativa Urbana Sede"
+              />
+            </div>
+            <div class="col-4 p-2 d-flex flex-column">
+              <label class="pb-1 text-center" for="area_total"
+                >Área Total</label
+              >
+              <input
+                class="border-1 border-secondary"
+                v-model="area_total"
+                type="number"
+                name="area_total"
+                placeholder="Área Total"
+              />
+            </div>
+          </div>
+          <div class="row m-2">
+            <div class="col-4 p-2 d-flex flex-column">
+              <label class="pb-1 text-center" for="densidade_demografica"
+                >Densidade Demográfica</label
+              >
+              <input
+                class="border-1 border-secondary"
+                v-model="densidade_demografica"
+                type="number"
+                name="densidade_demografica"
+                placeholder="Densidade Demográfica"
+              />
+            </div>
+          </div>
         </div>
 
-        <div class="row m-2">
-          <div class="col-4 p-2 d-flex flex-column">
-            <label class="pb-1 text-center" for="pop_absoluta_total"
-              >População Absoluta Total</label
-            >
-            <input
-              class="border-1 border-secondary"
-              v-model="pop_absoluta_total"
-              type="number"
-              name="pop_absoluta_total"
-              placeholder="População Absoluta Total"
-            />
-          </div>
-          <div class="col-4 p-2 d-flex flex-column">
-            <label class="pb-1 text-center" for="pop_absoluta_urbana_total"
-              >Pop. Absoluta Urbana Total</label
-            >
-            <input
-              class="border-1 border-secondary"
-              v-model="pop_absoluta_urbana_total"
-              type="number"
-              name="pop_absoluta_urbana_total"
-              placeholder="População Absoluta Urbana Total"
-            />
-          </div>
-          <div class="col-4 p-2 d-flex flex-column">
-            <label class="pb-1 text-center" for="pop_absoluta_urbana_sede"
-              >Pop. Absoluta Urbana na Sede</label
-            >
-            <input
-              class="border-1 border-secondary"
-              v-model="pop_absoluta_urbana_sede"
-              type="number"
-              name="pop_absoluta_urbana_sede"
-              placeholder="População Absoluta Urbana sede"
-            />
-          </div>
+        <div class="d-flex justify-content-end">
+          <button class="btn btn-dark m-2" @click="close()">Cancelar</button>
+          <button class="btn btn-dark m-2" @click="filterEntity()">
+            Filtrar
+          </button>
         </div>
-        <div class="row m-2">
-          <div class="col-4 p-2 d-flex flex-column">
-            <label class="pb-1 text-center" for="pop_relativa_urbana_total"
-              >População Relativa Urbana Total</label
-            >
-            <input
-              class="border-1 border-secondary"
-              v-model="pop_relativa_urbana_total"
-              type="number"
-              name="pop_relativa_urbana_total"
-              placeholder="População Relativa Urbana Total"
-            />
-          </div>
-          <div class="col-4 p-2 d-flex flex-column">
-            <label class="pb-1 text-center" for="pop_relativa_urbana_sede"
-              >Pop. Absoluta Relativa Urbana Sede</label
-            >
-            <input
-              class="border-1 border-secondary"
-              v-model="pop_relativa_urbana_sede"
-              type="number"
-              name="pop_relativa_urbana_sede"
-              placeholder="População Relativa Urbana Sede"
-            />
-          </div>
-          <div class="col-4 p-2 d-flex flex-column">
-            <label class="pb-1 text-center" for="area_total">Área Total</label>
-            <input
-              class="border-1 border-secondary"
-              v-model="area_total"
-              type="number"
-              name="area_total"
-              placeholder="Área Total"
-            />
-          </div>
-        </div>
-        <div class="row m-2">
-          <div class="col-4 p-2 d-flex flex-column">
-            <label class="pb-1 text-center" for="densidade_demografica"
-              >Densidade Demográfica</label
-            >
-            <input
-              class="border-1 border-secondary"
-              v-model="densidade_demografica"
-              type="number"
-              name="densidade_demografica"
-              placeholder="Densidade Demográfica"
-            />
-          </div>
-        </div>
-        <button class="modal-default-button" @click="filterEntity()">OK</button>
       </div>
     </div>
   </div>
@@ -148,15 +159,19 @@
 
 <script>
 import axios from "axios";
+import { computed } from "vue";
 import EntidadeModel from "../../models/EntidadeModel";
+import AbsoluteChartComponent from "../chart/AbsoluteChartComponent.vue";
 
 export default {
   name: "CenRsTelaConsulta",
+  components: { AbsoluteChartComponent },
   data() {
     return {
       ENTIDADES: [],
       ENTIDADE: EntidadeModel,
       displayFiltersModal: false,
+      displayGraphs: true,
       pop_absoluta_total: 0,
       pop_absoluta_urbana_total: 0,
       pop_absoluta_urbana_sede: 0,
@@ -165,6 +180,37 @@ export default {
       area_total: 0,
       densidade_demografica: 0,
       num_entidades: 0,
+    };
+  },
+  provide() {
+    return {
+      ENTIDADES: this.ENTIDADES,
+      filtros: computed(() => {
+        return {
+          pop_absoluta_total:
+            this.pop_absoluta_total > 0 ? this.pop_absoluta_total : "",
+          pop_absoluta_urbana_total:
+            this.pop_absoluta_urbana_total > 0
+              ? this.pop_absoluta_urbana_total
+              : "",
+          pop_absoluta_urbana_sede:
+            this.pop_absoluta_urbana_sede > 0
+              ? this.pop_absoluta_urbana_sede
+              : "",
+          pop_relativa_urbana_total:
+            this.pop_relativa_urbana_total > 0
+              ? this.pop_relativa_urbana_total
+              : "",
+          pop_relativa_urbana_sede:
+            this.pop_relativa_urbana_sede > 0
+              ? this.pop_relativa_urbana_sede
+              : "",
+          area_total: this.area_total > 0 ? this.area_total : "",
+          densidade_demografica:
+            this.densidade_demografica > 0 ? this.densidade_demografica : "",
+          num_entidades: 10,
+        };
+      }),
     };
   },
   mounted() {
@@ -179,7 +225,11 @@ export default {
       this.displayFiltersModal = false;
       this.getEntities();
     },
+    close() {
+      this.displayFiltersModal = false;
+    },
     getEntities() {
+      this.displayGraphs = false;
       axios
         .get("http://localhost:2512/cen-rs/entidades", {
           headers: { "Access-Control-Allow-Origin": "*" },
@@ -209,6 +259,7 @@ export default {
           },
         })
         .then((response) => {
+          this.displayGraphs = true;
           this.ENTIDADES = response.data;
           this.mountEntity(this.ENTIDADES[0]);
           console.log(this.ENTIDADES);

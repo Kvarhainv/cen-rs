@@ -3,7 +3,7 @@
     color: whitesmoke;
 }
 .bg-gray {
-    background-color: rgba(128, 128, 128, 0.853);
+    background-color: rgba(162, 162, 162, 0.853);
     color: black;
 }
 .remove-bullets {
@@ -35,10 +35,10 @@
 
 .modal-container {
     width: 60vw;
-    height: 50vh;
+    height: 40vh;
     margin: 0px auto;
     padding: 20px 30px;
-    background-color: #fff;
+    background-color: rgb(235, 235, 235);
     border-radius: 2px;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.33);
     transition: all 0.3s ease;
@@ -57,4 +57,8 @@ opacity: 0;
 .modal-leave-active .modal-container {
 -webkit-transform: scale(1.1);
 transform: scale(1.1);
+}
+
+.me-3 {
+    margin-right: 2rem;
 }
