@@ -28,8 +28,19 @@
       </div>
       <div class="row">
         <AbsoluteChartComponent
+          class="col-10"
           v-if="displayGraphs == true"
         ></AbsoluteChartComponent>
+      </div>
+      <div class="row">
+        <RelativeChartComponent
+          class="col-6"
+          v-if="displayGraphs == true"
+        ></RelativeChartComponent>
+        <ExtraChartComponent
+          class="col-6"
+          v-if="displayGraphs == true"
+        ></ExtraChartComponent>
       </div>
     </div>
   </div>
@@ -139,6 +150,23 @@
                 placeholder="Densidade Demográfica"
               />
             </div>
+
+            <div class="col-4 p-2 d-flex flex-column">
+              <label class="pb-1 text-center" for="num_entidades"
+                >Número de Entidades</label
+              >
+              <select
+                class="border-1 border-secondary"
+                v-model="num_entidades"
+                name="densidade_demografica"
+              >
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+                <option value="5">5</option>
+                <option value="10">10</option>
+              </select>
+            </div>
           </div>
         </div>
 
@@ -162,10 +190,16 @@ import axios from "axios";
 import { computed } from "vue";
 import EntidadeModel from "../../models/EntidadeModel";
 import AbsoluteChartComponent from "../chart/AbsoluteChartComponent.vue";
+import ExtraChartComponent from "../chart/ExtraChartComponent.vue";
+import RelativeChartComponent from "../chart/RelativeChartComponent.vue";
 
 export default {
   name: "CenRsTelaConsulta",
-  components: { AbsoluteChartComponent },
+  components: {
+    AbsoluteChartComponent,
+    RelativeChartComponent,
+    ExtraChartComponent,
+  },
   data() {
     return {
       ENTIDADES: [],
@@ -179,7 +213,7 @@ export default {
       pop_relativa_urbana_sede: 0,
       area_total: 0,
       densidade_demografica: 0,
-      num_entidades: 0,
+      num_entidades: 1,
     };
   },
   provide() {
@@ -208,7 +242,7 @@ export default {
           area_total: this.area_total > 0 ? this.area_total : "",
           densidade_demografica:
             this.densidade_demografica > 0 ? this.densidade_demografica : "",
-          num_entidades: 10,
+          num_entidades: this.num_entidades,
         };
       }),
     };
@@ -262,7 +296,6 @@ export default {
           this.displayGraphs = true;
           this.ENTIDADES = response.data;
           this.mountEntity(this.ENTIDADES[0]);
-          console.log(this.ENTIDADES);
         })
         .catch((error) => {
           alert(error);
