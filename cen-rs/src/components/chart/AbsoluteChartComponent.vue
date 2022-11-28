@@ -33,6 +33,7 @@ export default {
     loaded: false,
     chartData: null,
     chartOptions: { responsive: true, maintainAspectRatio: false },
+    num_entidades: null,
   }),
   components: {
     Bar,
@@ -74,7 +75,7 @@ export default {
           ),
         ],
       };
-      if (dataSets.length < 11) {
+      if (dataSets.length < this.num_entidades) {
         dataSets.push(dataSet);
       } else {
         break;
@@ -96,11 +97,7 @@ export default {
   methods: {
     async getEntities() {
       let filtros = await inject("filtros").value;
-      //   let pop_absoluta_total = await inject("pop_absoluta_total").value;
-      //   let pop_absoluta_urbana_total = await inject("pop_absoluta_urbana_total");
-      //   console.log(pop_absoluta_urbana_total);
-      //   let pop_absoluta_urbana_sede = await inject("pop_absoluta_urbana_sede");
-      //   let num_entidades = await inject("num_entidades");
+      this.num_entidades = filtros.num_entidades;
       const response = await axios.get(
         "http://localhost:2512/cen-rs/entidades",
         {

@@ -2,10 +2,10 @@
   <div class="row">
     <div class="col-3 m-3 scrollable">
       <ul class="remove-bullets">
-        <li class="bg-dark p-2 text-center rounded-top">Selecione a cidade</li>
+        <li class="bg-dark p-2 text-center rounded-top">Cidades</li>
         <li
           class="bg-gray p-2 border-bottom border-5"
-          v-for="entidade in ENTIDADES"
+          v-for="entidade in ENTIDADES.slice(0, this.num_entidades)"
           :key="entidade.cod_entidade"
           @click="mountEntity(entidade)"
         >
