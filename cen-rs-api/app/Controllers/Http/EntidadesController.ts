@@ -4,8 +4,6 @@ import { EntidadeRepository } from './../../Repositories/EntidadeRepository'
 export default class EntidadesController {
   public async index({ request, response }: HttpContextContract) {
     try {
-      console.log('a')
-      console.log(request.all())
       await new EntidadeRepository()
         .index(request.all())
         .catch()

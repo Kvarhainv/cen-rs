@@ -5,7 +5,7 @@
         <li class="bg-dark p-2 text-center rounded-top">Cidades</li>
         <li
           class="bg-gray p-2 border-bottom border-5"
-          v-for="entidade in ENTIDADES.slice(0, this.num_entidades)"
+          v-for="entidade in ENTIDADES"
           :key="entidade.cod_entidade"
           @click="mountEntity(entidade)"
         >
@@ -28,7 +28,7 @@
       </div>
       <div class="row">
         <AbsoluteChartComponent
-          class="col-10"
+          class="col-11"
           v-if="displayGraphs == true"
         ></AbsoluteChartComponent>
       </div>
@@ -114,7 +114,7 @@
             </div>
             <div class="col-4 p-2 d-flex flex-column">
               <label class="pb-1 text-center" for="pop_relativa_urbana_sede"
-                >Pop. Absoluta Relativa Urbana Sede</label
+                >Pop. Relativa Urbana Sede</label
               >
               <input
                 class="border-1 border-secondary"
@@ -126,7 +126,7 @@
             </div>
             <div class="col-4 p-2 d-flex flex-column">
               <label class="pb-1 text-center" for="area_total"
-                >Área Total</label
+                >Área Total (km²)</label
               >
               <input
                 class="border-1 border-secondary"
@@ -140,7 +140,7 @@
           <div class="row m-2">
             <div class="col-4 p-2 d-flex flex-column">
               <label class="pb-1 text-center" for="densidade_demografica"
-                >Densidade Demográfica</label
+                >Densidade Demográfica (hab/km²)</label
               >
               <input
                 class="border-1 border-secondary"
@@ -149,23 +149,6 @@
                 name="densidade_demografica"
                 placeholder="Densidade Demográfica"
               />
-            </div>
-
-            <div class="col-4 p-2 d-flex flex-column">
-              <label class="pb-1 text-center" for="num_entidades"
-                >Número de Entidades</label
-              >
-              <select
-                class="border-1 border-secondary"
-                v-model="num_entidades"
-                name="densidade_demografica"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="3">3</option>
-                <option value="5">5</option>
-                <option value="10">10</option>
-              </select>
             </div>
           </div>
         </div>
@@ -206,6 +189,7 @@ export default {
       ENTIDADE: EntidadeModel,
       displayFiltersModal: false,
       displayGraphs: true,
+      entity_codes: [],
       pop_absoluta_total: 0,
       pop_absoluta_urbana_total: 0,
       pop_absoluta_urbana_sede: 0,
@@ -213,36 +197,13 @@ export default {
       pop_relativa_urbana_sede: 0,
       area_total: 0,
       densidade_demografica: 0,
-      num_entidades: 1,
     };
   },
   provide() {
     return {
-      ENTIDADES: this.ENTIDADES,
       filtros: computed(() => {
         return {
-          pop_absoluta_total:
-            this.pop_absoluta_total > 0 ? this.pop_absoluta_total : "",
-          pop_absoluta_urbana_total:
-            this.pop_absoluta_urbana_total > 0
-              ? this.pop_absoluta_urbana_total
-              : "",
-          pop_absoluta_urbana_sede:
-            this.pop_absoluta_urbana_sede > 0
-              ? this.pop_absoluta_urbana_sede
-              : "",
-          pop_relativa_urbana_total:
-            this.pop_relativa_urbana_total > 0
-              ? this.pop_relativa_urbana_total
-              : "",
-          pop_relativa_urbana_sede:
-            this.pop_relativa_urbana_sede > 0
-              ? this.pop_relativa_urbana_sede
-              : "",
-          area_total: this.area_total > 0 ? this.area_total : "",
-          densidade_demografica:
-            this.densidade_demografica > 0 ? this.densidade_demografica : "",
-          num_entidades: this.num_entidades,
+          entity_codes: this.entity_codes,
         };
       }),
     };
@@ -251,9 +212,18 @@ export default {
     this.getEntities();
   },
   methods: {
-    mountEntity(entidade) {
+    async mountEntity(entidade) {
+      this.displayGraphs = false;
       this.ENTIDADE = entidade;
-      console.log(entidade);
+      if (this.entity_codes.length < 11) {
+        this.entity_codes.push(entidade.cod_entidade);
+      } else {
+        this.entity_codes.pop();
+        this.entity_codes = [entidade.cod_entidade, ...this.entity_codes];
+      }
+      setTimeout(() => {
+        this.displayGraphs = true;
+      }, 100);
     },
     filterEntity() {
       this.displayFiltersModal = false;
@@ -289,13 +259,13 @@ export default {
             area_total: this.area_total > 0 ? this.area_total : "",
             densidade_demografica:
               this.densidade_demografica > 0 ? this.densidade_demografica : "",
-            num_entidades: 10,
+            num_entidades: this.num_entidades,
           },
         })
         .then((response) => {
           this.displayGraphs = true;
           this.ENTIDADES = response.data;
-          this.mountEntity(this.ENTIDADES[0]);
+          // this.mountEntity(this.ENTIDADES[0]);
         })
         .catch((error) => {
           alert(error);

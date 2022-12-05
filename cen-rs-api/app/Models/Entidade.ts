@@ -21,6 +21,9 @@ export default class Entidade extends BaseModel {
   public pop_absoluta_urbana_sede: string
 
   @column()
+  public pop_relativa_urbana_total: string
+
+  @column()
   public pop_relativa_urbana_sede: string
 
   @column()

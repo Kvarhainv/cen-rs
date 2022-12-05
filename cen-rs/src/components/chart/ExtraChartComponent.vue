@@ -62,22 +62,22 @@ export default {
     for (let entidade of await entidades) {
       let dataSet = {
         label: entidade.nom_entidade,
-        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
-          16
-        )}`,
+        backgroundColor: `#${Math.floor(
+          toNumber(String(entidade.cod_entidade)) * 200
+        ).toString(16)}`,
         data: [
           toNumber(String(entidade.area_total).replaceAll(" ", "")),
           toNumber(String(entidade.densidade_demografica).replaceAll(" ", "")),
         ],
       };
-      if (dataSets.length < this.num_entidades) {
+      if (dataSets.length < 11) {
         dataSets.push(dataSet);
       } else {
         break;
       }
     }
     const chartData = {
-      labels: ["area_total", "densidade_demografica"],
+      labels: ["Área (km²)", "Densidade Demográfica (hab/km²)"],
       datasets: [...dataSets],
     };
     this.chartData = chartData;
@@ -86,17 +86,15 @@ export default {
   methods: {
     async getEntities() {
       let filtros = await inject("filtros").value;
-      this.num_entidades = filtros.num_entidades;
+      var params = {
+        entity_codes: filtros.entity_codes,
+      };
       const response = await axios.get(
         "http://localhost:2512/cen-rs/entidades",
         {
           headers: { "Access-Control-Allow-Origin": "*" },
           params: {
-            area_total: filtros.area_total ? filtros.area_total : "",
-            densidade_demografica: filtros.densidade_demografica
-              ? filtros.densidade_demografica
-              : "",
-            num_entidades: filtros.num_entidades ? filtros.num_entidades : 1,
+            ...params,
           },
         }
       );

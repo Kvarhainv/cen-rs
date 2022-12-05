@@ -62,9 +62,9 @@ export default {
     for (let entidade of await entidades) {
       let dataSet = {
         label: entidade.nom_entidade,
-        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
-          16
-        )}`,
+        backgroundColor: `#${Math.floor(
+          toNumber(String(entidade.cod_entidade) * 200)
+        ).toString(16)}`,
         data: [
           toNumber(String(entidade.pop_absoluta_total).replaceAll(" ", "")),
           toNumber(
@@ -75,47 +75,33 @@ export default {
           ),
         ],
       };
-      if (dataSets.length < this.num_entidades) {
+      if (dataSets.length < 11) {
         dataSets.push(dataSet);
       } else {
         break;
       }
     }
-    console.log("datasets", dataSets);
     const chartData = {
       labels: [
-        "pop_absoluta_total",
-        "pop_absoluta_urbana_total",
-        "pop_absoluta_urbana_sede",
+        "População Total",
+        "Pop. Urbana Total",
+        "Pop. Urb. Total na Sede Municipal",
       ],
       datasets: [...dataSets],
     };
-    console.log(chartData);
     this.chartData = chartData;
     this.loaded = true;
   },
   methods: {
     async getEntities() {
       let filtros = await inject("filtros").value;
-      this.num_entidades = filtros.num_entidades;
-      const response = await axios.get(
-        "http://localhost:2512/cen-rs/entidades",
-        {
-          headers: { "Access-Control-Allow-Origin": "*" },
-          params: {
-            pop_absoluta_total: filtros.pop_absoluta_total
-              ? filtros.pop_absoluta_total
-              : "",
-            pop_absoluta_urbana_total: filtros.pop_absoluta_urbana_total
-              ? filtros.pop_absoluta_urbana_total
-              : "",
-            pop_absoluta_urbana_sede: filtros.pop_absoluta_urbana_sede
-              ? filtros.pop_absoluta_urbana_sede
-              : "",
-            num_entidades: filtros.num_entidades ? filtros.num_entidades : 1,
-          },
-        }
-      );
+      var params = {
+        entity_codes: filtros.entity_codes,
+      };
+      var response = await axios.get("http://localhost:2512/cen-rs/entidades", {
+        headers: { "Access-Control-Allow-Origin": "*" },
+        params: { ...params },
+      });
       return response.data;
     },
   },

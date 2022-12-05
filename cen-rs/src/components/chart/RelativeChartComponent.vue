@@ -17,7 +17,6 @@ import {
 } from "chart.js";
 import { inject } from "vue";
 import { Bar } from "vue-chartjs";
-
 ChartJS.register(
   Title,
   Tooltip,
@@ -32,8 +31,10 @@ export default {
   data: () => ({
     loaded: false,
     chartData: null,
-    chartOptions: { responsive: true, maintainAspectRatio: false },
-    num_entidades: null,
+    chartOptions: {
+      responsive: true,
+      maintainAspectRatio: false,
+    },
   }),
   components: {
     Bar,
@@ -62,9 +63,9 @@ export default {
     for (let entidade of await entidades) {
       let dataSet = {
         label: entidade.nom_entidade,
-        backgroundColor: `#${Math.floor(Math.random() * 16777215).toString(
-          16
-        )}`,
+        backgroundColor: `#${Math.floor(
+          toNumber(String(entidade.cod_entidade) * 200)
+        ).toString(16)}`,
         data: [
           toNumber(
             String(entidade.pop_relativa_urbana_total).replaceAll(" ", "")
@@ -74,36 +75,31 @@ export default {
           ),
         ],
       };
-      if (dataSets.length < this.num_entidades) {
+      if (dataSets.length < 11) {
         dataSets.push(dataSet);
       } else {
         break;
       }
     }
     const chartData = {
-      labels: ["pop_relativa_urbana_total", "pop_relativa_urbana_sede"],
+      labels: ["Pop. Relativa Urbana", "Pop. Rel. Urbana na Sede Municipal"],
       datasets: [...dataSets],
     };
-    console.log(chartData);
     this.chartData = chartData;
     this.loaded = true;
   },
   methods: {
     async getEntities() {
       let filtros = await inject("filtros").value;
-      this.num_entidades = filtros.num_entidades;
+      var params = {
+        entity_codes: filtros.entity_codes,
+      };
       const response = await axios.get(
         "http://localhost:2512/cen-rs/entidades",
         {
           headers: { "Access-Control-Allow-Origin": "*" },
           params: {
-            pop_relativa_urbana_total: filtros.pop_relativa_urbana_total
-              ? filtros.pop_relativa_urbana_total
-              : "",
-            pop_relativa_urbana_sede: filtros.pop_relativa_urbana_sede
-              ? filtros.pop_relativa_urbana_sede
-              : "",
-            num_entidades: filtros.num_entidades ? filtros.num_entidades : 1,
+            ...params,
           },
         }
       );
